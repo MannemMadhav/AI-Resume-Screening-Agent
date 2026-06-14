@@ -2,22 +2,64 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>AI Resume Screening Agent</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 
 <body>
 
+<nav class="navbar">
+    <div class="logo">
+        AI Resume Screening Agent
+    </div>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/history">History</a>
+    </div>
+</nav>
+
+<section class="hero">
+
+    <h1>Get Your ATS Score In Seconds</h1>
+
+    <p>
+        Upload your resume, compare it with a job description,
+        identify missing skills, receive AI-powered feedback,
+        and improve your chances of getting shortlisted.
+    </p>
+
+</section>
+
 <div class="container">
 
-    <h1>AI Resume Screening Agent</h1>
+    <div class="features">
+
+        <div class="feature-card">
+            <h3>ATS Match Score</h3>
+            <p>Know how well your resume matches the job.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Missing Skills</h3>
+            <p>Discover important skills recruiters expect.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Interview Questions</h3>
+            <p>Prepare with AI-generated interview questions.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>PDF Reports</h3>
+            <p>Download a professional analysis report.</p>
+        </div>
+
+    </div>
 
     <div class="card">
 
@@ -27,7 +69,7 @@
 
             <div class="upload-box">
 
-                <h2>📄 Upload Resume</h2>
+                <h2>Upload Resume</h2>
 
                 <input type="file"
                        id="resume"
@@ -41,8 +83,6 @@
 
             </div>
 
-            <br>
-
             <label>
                 Job Description
             </label>
@@ -51,8 +91,7 @@
                 name="job_description"
                 rows="10"
                 placeholder="Paste Job Description Here..."
-                required>
-            </textarea>
+                required></textarea>
 
             <br><br>
 
@@ -66,6 +105,14 @@
 
 </div>
 
+<footer>
+
+    <p>
+        AI Resume Screening Agent
+    </p>
+
+</footer>
+
 <div id="loadingScreen"
      class="loading-screen">
 
@@ -73,9 +120,7 @@
 
     <h2>Analyzing Resume...</h2>
 
-    <p>
-        AI is processing your resume.
-    </p>
+    <p>Please wait while AI evaluates your resume.</p>
 
 </div>
 
