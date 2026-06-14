@@ -234,3 +234,58 @@ textarea:focus {
     }
 
 }
+.upload-box {
+
+    border: 2px dashed #0078d7;
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    background: #f8fbff;
+
+    margin-bottom: 20px;
+
+}
+
+.upload-box h2 {
+
+    margin-top: 0;
+
+    color: #0078d7;
+
+}
+
+.upload-box input {
+
+    margin-top: 10px;
+
+}
+
+#fileName {
+
+    margin-top: 15px;
+
+    font-weight: bold;
+
+    color: #2c3e50;
+
+}
+
+textarea {
+
+    width: 100%;
+
+    border-radius: 10px;
+
+    padding: 15px;
+
+    border: 1px solid #ccc;
+
+    resize: vertical;
+
+    font-size: 16px;
+
+}

@@ -8,7 +8,8 @@
 
     <title>AI Resume Screening Agent</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
@@ -24,20 +25,34 @@
               method="POST"
               enctype="multipart/form-data">
 
-            <label>Select Resume (PDF)</label>
+            <div class="upload-box">
 
-            <input type="file"
-                   name="resume"
-                   accept=".pdf"
-                   required>
+                <h2>📄 Upload Resume</h2>
 
-            <br><br>
+                <input type="file"
+                       id="resume"
+                       name="resume"
+                       accept=".pdf"
+                       required>
 
-            <label>Job Description</label>
+                <p id="fileName">
+                    No file selected
+                </p>
 
-            <textarea name="job_description"
-                      rows="10"
-                      required></textarea>
+            </div>
+
+            <br>
+
+            <label>
+                Job Description
+            </label>
+
+            <textarea
+                name="job_description"
+                rows="10"
+                placeholder="Paste Job Description Here..."
+                required>
+            </textarea>
 
             <br><br>
 
@@ -51,24 +66,44 @@
 
 </div>
 
-<div id="loadingScreen" class="loading-screen">
+<div id="loadingScreen"
+     class="loading-screen">
 
     <div class="loader"></div>
 
     <h2>Analyzing Resume...</h2>
 
-    <p>Please wait while AI processes the resume.</p>
+    <p>
+        AI is processing your resume.
+    </p>
 
 </div>
 
 <script>
 
-document.getElementById("resumeForm")
+document
+.getElementById("resume")
+.addEventListener("change", function() {
+
+    if(this.files.length > 0){
+
+        document
+        .getElementById("fileName")
+        .innerText =
+        "Selected: " +
+        this.files[0].name;
+
+    }
+
+});
+
+document
+.getElementById("resumeForm")
 .addEventListener("submit", function() {
 
-    document.getElementById(
-        "loadingScreen"
-    ).style.display = "flex";
+    document
+    .getElementById("loadingScreen")
+    .style.display = "flex";
 
 });
 
