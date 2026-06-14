@@ -71,6 +71,34 @@ def home():
             if text:
                 resume_text += text
 
+        resume_lower = resume_text.lower()
+
+        if any(skill in resume_lower for skill in [
+            "python", "java", "c++", "javascript",
+            "html", "css", "flask", "react"
+        ]):
+            category = "Software Developer"
+
+        elif any(skill in resume_lower for skill in [
+            "sql", "power bi", "tableau",
+            "excel", "data analyst"
+        ]):
+            category = "Data Analyst"
+
+        elif any(skill in resume_lower for skill in [
+            "recruitment", "hr",
+            "human resources"
+        ]):
+            category = "Human Resources"
+
+        elif any(skill in resume_lower for skill in [
+            "marketing", "sales", "seo"
+        ]):
+            category = "Marketing"
+
+        else:
+            category = "General Professional"
+
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[
@@ -119,9 +147,7 @@ INTERVIEW QUESTIONS:
         score = 0
 
         if score_match:
-            score = int(
-                score_match.group(1)
-            )
+            score = int(score_match.group(1))
 
         if score >= 90:
             grade = "A+"
@@ -198,6 +224,12 @@ INTERVIEW QUESTIONS:
             Spacer(1, 12),
 
             Paragraph(
+                f"Category: {category}",
+                styles["Heading2"]
+            ),
+            Spacer(1, 12),
+
+            Paragraph(
                 f"ATS Recommendation: {ats_status}",
                 styles["Heading2"]
             ),
@@ -219,7 +251,8 @@ INTERVIEW QUESTIONS:
             result=cleaned_result,
             score=score,
             grade=grade,
-            ats_status=ats_status
+            ats_status=ats_status,
+            category=category
         )
 
     return render_template("index.html")
