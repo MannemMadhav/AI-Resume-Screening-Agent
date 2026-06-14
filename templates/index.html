@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Screening Agent</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>AI Resume Screening Agent</h1>
+
+    <p>Upload your resume and enter a job description.</p>
+
+   <form method="POST" enctype="multipart/form-data">
+
+        <label>Select Resume:</label>
+        <br><br>
+
+        <input type="file" name="resume" required>
+        <br><br>
+
+        <label>Job Description:</label>
+        <br><br>
+
+        <textarea rows="10" name="job_description" required></textarea>
+        <br><br>
+
+        <button type="submit">
+            Analyze Resume
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

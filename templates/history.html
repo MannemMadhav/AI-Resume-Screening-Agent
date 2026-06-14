@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Analysis History</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Analysis History Dashboard</h1>
+
+    <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:30px;">
+
+        <div class="card" style="flex:1;text-align:center;">
+            <h2>Total Analyses</h2>
+            <h1>{{ total_analyses }}</h1>
+        </div>
+
+        <div class="card" style="flex:1;text-align:center;">
+            <h2>Highest Score</h2>
+            <h1>{{ highest_score }}%</h1>
+        </div>
+
+        <div class="card" style="flex:1;text-align:center;">
+            <h2>Average Score</h2>
+            <h1>{{ average_score }}%</h1>
+        </div>
+
+        <div class="card" style="flex:1;text-align:center;">
+            <h2>Latest Resume</h2>
+            <p>{{ latest_resume }}</p>
+        </div>
+
+    </div>
+
+    <table>
+
+        <tr>
+            <th>Resume Name</th>
+            <th>Match Score</th>
+            <th>Date Time</th>
+        </tr>
+
+        {% for row in records %}
+
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}%</td>
+            <td>{{ row[2] }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br><br>
+
+    <a href="/">
+        <button>
+            Back To Home
+        </button>
+    </a>
+
+</div>
+
+</body>
+
+</html>

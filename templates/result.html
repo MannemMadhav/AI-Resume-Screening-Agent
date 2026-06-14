@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analysis Report</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>AI Resume Analysis Report</h1>
+
+    {% if score >= 80 %}
+
+        <div class="score-box green">
+            Match Score: {{ score }}%
+            <br><br>
+            🚀 EXCELLENT MATCH
+        </div>
+
+        <div class="card">
+            <h2>ATS Recommendation</h2>
+            <p class="result-text">
+                Strongly Recommended For Interview
+            </p>
+        </div>
+
+    {% elif score >= 60 %}
+
+        <div class="score-box yellow">
+            Match Score: {{ score }}%
+            <br><br>
+            👍 GOOD MATCH
+        </div>
+
+        <div class="card">
+            <h2>ATS Recommendation</h2>
+            <p class="result-text">
+                Recommended With Minor Improvements
+            </p>
+        </div>
+
+    {% elif score >= 40 %}
+
+        <div class="score-box yellow">
+            Match Score: {{ score }}%
+            <br><br>
+            ⚠️ AVERAGE MATCH
+        </div>
+
+        <div class="card">
+            <h2>ATS Recommendation</h2>
+            <p class="result-text">
+                Candidate Needs Skill Improvement
+            </p>
+        </div>
+
+    {% else %}
+
+        <div class="score-box red">
+            Match Score: {{ score }}%
+            <br><br>
+            ❌ POOR MATCH
+        </div>
+
+        <div class="card">
+            <h2>ATS Recommendation</h2>
+            <p class="result-text">
+                {{ ats_status }}
+            </p>
+        </div>
+
+    {% endif %}
+
+    <div class="card">
+        <h2>Detected Resume Category</h2>
+
+        <div class="result-text">
+            {{ category }}
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Analysis Details</h2>
+
+        <pre class="result-text">{{ result }}</pre>
+    </div>
+
+    <div class="card">
+
+        <h2>AI Learning Roadmap</h2>
+
+        <div class="result-text">
+
+📘 Week 1
+Learn Python Fundamentals
+
+📘 Week 2
+Practice Python Mini Projects
+
+📘 Week 3
+Learn Object Oriented Programming
+
+📘 Week 4
+Learn Flask Framework
+
+📘 Week 5
+Build REST APIs
+
+📘 Week 6
+Learn SQL & Database Design
+
+📘 Week 7
+Learn Git & GitHub
+
+📘 Week 8
+Build Full Stack Projects
+
+📘 Week 9
+Learn Deployment
+
+📘 Week 10
+Prepare For Technical Interviews
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Resume Strength Meter</h2>
+
+        <div style="width:100%; background:#ddd; border-radius:10px; overflow:hidden;">
+
+            <div class="strength-bar"
+                 style="width: {{ score }}%;">
+            </div>
+
+        </div>
+
+        <br>
+
+        <strong>{{ score }}% Resume Strength</strong>
+
+    </div>
+
+    <div style="display:flex; gap:15px; flex-wrap:wrap;">
+
+        <a href="/download-report">
+            <button>
+                Download PDF Report
+            </button>
+        </a>
+
+        <a href="/history">
+            <button>
+                View Analysis History
+            </button>
+        </a>
+
+        <a href="/">
+            <button>
+                Analyze Another Resume
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

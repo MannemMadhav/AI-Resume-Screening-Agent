@@ -1,0 +1,195 @@
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7fc;
+    margin: 0;
+    padding: 0;
+    color: #2c3e50;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+h1 {
+    text-align: center;
+    color: #1e3a5f;
+    font-size: 42px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* Score Card */
+
+.score-box {
+    text-align: center;
+    font-size: 42px;
+    font-weight: bold;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    color: white;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+}
+
+.green {
+    background: linear-gradient(135deg, #28a745, #1f8b3c);
+}
+
+.yellow {
+    background: linear-gradient(135deg, #f7b731, #f39c12);
+    color: black;
+}
+
+.red {
+    background: linear-gradient(135deg, #e63946, #c1121f);
+}
+
+/* Cards */
+
+.card {
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #1e3a5f;
+    font-size: 30px;
+}
+
+/* Result Content */
+
+.result-text {
+    white-space: pre-wrap;
+    font-size: 20px;
+    line-height: 2;
+    color: #333;
+}
+
+/* Buttons */
+
+button {
+    background: linear-gradient(135deg, #0078d7, #005fa3);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    margin-bottom: 12px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 5px 15px rgba(0,120,215,0.3);
+}
+
+/* Table Styling */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+}
+
+table th {
+    background: #1e3a5f;
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+}
+
+table td {
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+table tr:hover {
+    background: #f7faff;
+}
+
+/* Form Styling */
+
+form {
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+}
+
+label {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+input[type="file"] {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    font-size: 16px;
+    resize: vertical;
+    min-height: 180px;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #0078d7;
+    box-shadow: 0px 0px 8px rgba(0,120,215,0.2);
+}
+
+/* Responsive */
+
+@media screen and (max-width: 768px) {
+
+    .container {
+        width: 95%;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .score-box {
+        font-size: 28px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+.strength-bar{
+    height:30px;
+    background:#28a745;
+    border-radius:10px;
+}
