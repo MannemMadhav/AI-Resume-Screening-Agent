@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AI Resume Screening Agent</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
 <body>
@@ -13,29 +18,61 @@
 
     <h1>AI Resume Screening Agent</h1>
 
-    <p>Upload your resume and enter a job description.</p>
+    <div class="card">
 
-   <form method="POST" enctype="multipart/form-data">
+        <form id="resumeForm"
+              method="POST"
+              enctype="multipart/form-data">
 
-        <label>Select Resume:</label>
-        <br><br>
+            <label>Select Resume (PDF)</label>
 
-        <input type="file" name="resume" required>
-        <br><br>
+            <input type="file"
+                   name="resume"
+                   accept=".pdf"
+                   required>
 
-        <label>Job Description:</label>
-        <br><br>
+            <br><br>
 
-        <textarea rows="10" name="job_description" required></textarea>
-        <br><br>
+            <label>Job Description</label>
 
-        <button type="submit">
-            Analyze Resume
-        </button>
+            <textarea name="job_description"
+                      rows="10"
+                      required></textarea>
 
-    </form>
+            <br><br>
+
+            <button type="submit">
+                Analyze Resume
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
+
+<div id="loadingScreen" class="loading-screen">
+
+    <div class="loader"></div>
+
+    <h2>Analyzing Resume...</h2>
+
+    <p>Please wait while AI processes the resume.</p>
+
+</div>
+
+<script>
+
+document.getElementById("resumeForm")
+.addEventListener("submit", function() {
+
+    document.getElementById(
+        "loadingScreen"
+    ).style.display = "flex";
+
+});
+
+</script>
 
 </body>
 </html>
