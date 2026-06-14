@@ -42,6 +42,10 @@ def home():
 
         resume = request.files["resume"]
         job_description = request.form["job_description"]
+        if resume.filename == "":
+            return "Please select a resume."
+        if not resume.filename.lower().endswith(".pdf"):
+            return "Only PDF files are allowed."
 
         pdf_path = os.path.join(
             UPLOAD_FOLDER,
