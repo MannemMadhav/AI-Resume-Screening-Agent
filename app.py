@@ -13,67 +13,38 @@ from reportlab.lib.styles import getSampleStyleSheet
 
 load_dotenv()
 
+app = Flask(__name__)
+
+UPLOAD_FOLDER = "uploads"
+REPORT_FOLDER = "reports"
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(REPORT_FOLDER, exist_ok=True)
+
+if not os.path.exists("history.csv"):
+    with open("history.csv", "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Resume Name", "Match Score", "Date Time"])
+
 client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
 
-app = Flask(__name__)
-
 latest_report_path = None
 
 
-def detect_category(resume_text):
-
-    text = resume_text.lower()
-
-    if any(word in text for word in [
-        "python",
-        "java",
-        "developer",
-        "software",
-        "programming"
-    ]):
-        return "Software Developer"
-
-    elif any(word in text for word in [
-        "human resource",
-        "recruitment",
-        "hr",
-        "employee"
-    ]):
-        return "Human Resource"
-
-    elif any(word in text for word in [
-        "marketing",
-        "sales",
-        "digital marketing"
-    ]):
-        return "Marketing"
-
-    elif any(word in text for word in [
-        "data analyst",
-        "analytics",
-        "sql",
-        "power bi"
-    ]):
-        return "Data Analyst"
-
-    else:
-        return "Career Transition Candidate"
-
-
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
 def home():
 
     global latest_report_path
 
-    if request.method == 'POST':
+    if request.method == "POST":
 
-        resume = request.files['resume']
-        job_description = request.form['job_description']
+        resume = request.files["resume"]
+        job_description = request.form["job_description"]
 
         pdf_path = os.path.join(
-            'uploads',
+            UPLOAD_FOLDER,
             resume.filename
         )
 
@@ -84,13 +55,10 @@ def home():
         resume_text = ""
 
         for page in reader.pages:
-
             text = page.extract_text()
 
             if text:
                 resume_text += text
-
-        category = detect_category(resume_text)
 
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
@@ -98,23 +66,15 @@ def home():
                 {
                     "role": "user",
                     "content": f"""
-You are a professional ATS Resume Analyzer.
+You are an ATS Resume Screening System.
 
-Compare the resume with the job description.
+Analyze the resume against the job description.
 
 Resume:
 {resume_text}
 
 Job Description:
 {job_description}
-
-Rules:
-
-1. Give realistic ATS Match Score.
-2. Detect missing skills.
-3. Give improvement suggestions.
-4. Give 5 interview questions.
-5. Score should be between 0 and 100.
 
 Return EXACTLY:
 
@@ -147,18 +107,11 @@ INTERVIEW QUESTIONS:
         if score_match:
             score = int(score_match.group(1))
 
-        if score >= 75:
-            ats_status = "Highly Recommended"
-        elif score >= 50:
-            ats_status = "Recommended"
-        else:
-            ats_status = "Not Recommended For Current Role"
-
         with open(
-            'history.csv',
-            'a',
-            newline='',
-            encoding='utf-8'
+            "history.csv",
+            "a",
+            newline="",
+            encoding="utf-8"
         ) as file:
 
             writer = csv.writer(file)
@@ -166,9 +119,7 @@ INTERVIEW QUESTIONS:
             writer.writerow([
                 resume.filename,
                 score,
-                datetime.now().strftime(
-                    "%Y-%m-%d %H:%M:%S"
-                )
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             ])
 
         cleaned_result = re.sub(
@@ -178,16 +129,12 @@ INTERVIEW QUESTIONS:
             flags=re.IGNORECASE
         )
 
-        report_filename = "resume_analysis_report.pdf"
-
         latest_report_path = os.path.join(
-            "reports",
-            report_filename
+            REPORT_FOLDER,
+            "resume_analysis_report.pdf"
         )
 
-        doc = SimpleDocTemplate(
-            latest_report_path
-        )
+        doc = SimpleDocTemplate(latest_report_path)
 
         styles = getSampleStyleSheet()
 
@@ -198,20 +145,7 @@ INTERVIEW QUESTIONS:
             ),
             Spacer(1, 12),
             Paragraph(
-                f"Resume Category: {category}",
-                styles['Heading2']
-            ),
-            Spacer(1, 12),
-            Paragraph(
-                f"ATS Recommendation: {ats_status}",
-                styles['Heading2']
-            ),
-            Spacer(1, 12),
-            Paragraph(
-                cleaned_result.replace(
-                    "\n",
-                    "<br/>"
-                ),
+                cleaned_result.replace("\n", "<br/>"),
                 styles['BodyText']
             )
         ]
@@ -219,17 +153,15 @@ INTERVIEW QUESTIONS:
         doc.build(content)
 
         return render_template(
-            'result.html',
+            "result.html",
             result=cleaned_result,
-            score=score,
-            category=category,
-            ats_status=ats_status
+            score=score
         )
 
-    return render_template('index.html')
+    return render_template("index.html")
 
 
-@app.route('/history')
+@app.route("/history")
 def history():
 
     records = []
@@ -242,9 +174,9 @@ def history():
     scores = []
 
     with open(
-        'history.csv',
-        'r',
-        encoding='utf-8'
+        "history.csv",
+        "r",
+        encoding="utf-8"
     ) as file:
 
         reader = csv.reader(file)
@@ -278,7 +210,7 @@ def history():
             )
 
     return render_template(
-        'history.html',
+        "history.html",
         records=records,
         total_analyses=total_analyses,
         highest_score=highest_score,
@@ -287,7 +219,7 @@ def history():
     )
 
 
-@app.route('/download-report')
+@app.route("/download-report")
 def download_report():
 
     global latest_report_path
@@ -304,6 +236,13 @@ def download_report():
     return "No report available."
 
 
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+if __name__ == "__main__":
+
+    port = int(
+        os.environ.get("PORT", 5000)
+    )
+
+    app.run(
+        host="0.0.0.0",
+        port=port
+    )
