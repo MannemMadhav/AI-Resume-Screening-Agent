@@ -239,7 +239,13 @@ def download_report():
 
     return "No report available."
 
+@app.route("/download-history")
+def download_history():
 
+    return send_file(
+        "history.csv",
+        as_attachment=True
+    )
 if __name__ == "__main__":
 
     port = int(
