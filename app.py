@@ -22,9 +22,13 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(REPORT_FOLDER, exist_ok=True)
 
 if not os.path.exists("history.csv"):
-    with open("history.csv", "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerow(["Resume Name", "Match Score", "Date Time"])
+    with open("history.csv", "w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow([
+            "Resume Name",
+            "Match Score",
+            "Date Time"
+        ])
 
 client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
@@ -42,8 +46,10 @@ def home():
 
         resume = request.files["resume"]
         job_description = request.form["job_description"]
+
         if resume.filename == "":
             return "Please select a resume."
+
         if not resume.filename.lower().endswith(".pdf"):
             return "Only PDF files are allowed."
 
@@ -59,6 +65,7 @@ def home():
         resume_text = ""
 
         for page in reader.pages:
+
             text = page.extract_text()
 
             if text:
@@ -104,9 +111,18 @@ INTERVIEW QUESTIONS:
 
         ai_result = response.choices[0].message.content
 
-        score_match = re.search(r'(\d+)%', ai_result)
+        score_match = re.search(
+            r'(\d+)%',
+            ai_result
+        )
 
         score = 0
+
+        if score_match:
+            score = int(
+                score_match.group(1)
+            )
+
         if score >= 90:
             grade = "A+"
         elif score >= 80:
@@ -119,15 +135,13 @@ INTERVIEW QUESTIONS:
             grade = "C"
         else:
             grade = "Needs Improvement"
+
         if score >= 75:
-                ats_status = "Highly Recommended"
+            ats_status = "Highly Recommended"
         elif score >= 50:
             ats_status = "Recommended"
         else:
             ats_status = "Not Recommended For Current Role"
-
-        if score_match:
-            score = int(score_match.group(1))
 
         with open(
             "history.csv",
@@ -141,7 +155,9 @@ INTERVIEW QUESTIONS:
             writer.writerow([
                 resume.filename,
                 score,
-                datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S"
+                )
             ])
 
         cleaned_result = re.sub(
@@ -156,19 +172,43 @@ INTERVIEW QUESTIONS:
             "resume_analysis_report.pdf"
         )
 
-        doc = SimpleDocTemplate(latest_report_path)
+        doc = SimpleDocTemplate(
+            latest_report_path
+        )
 
         styles = getSampleStyleSheet()
 
         content = [
             Paragraph(
                 "AI Resume Analysis Report",
-                styles['Title']
+                styles["Title"]
             ),
             Spacer(1, 12),
+
             Paragraph(
-                cleaned_result.replace("\n", "<br/>"),
-                styles['BodyText']
+                f"Match Score: {score}%",
+                styles["Heading2"]
+            ),
+            Spacer(1, 12),
+
+            Paragraph(
+                f"Grade: {grade}",
+                styles["Heading2"]
+            ),
+            Spacer(1, 12),
+
+            Paragraph(
+                f"ATS Recommendation: {ats_status}",
+                styles["Heading2"]
+            ),
+            Spacer(1, 12),
+
+            Paragraph(
+                cleaned_result.replace(
+                    "\n",
+                    "<br/>"
+                ),
+                styles["BodyText"]
             )
         ]
 
@@ -178,9 +218,8 @@ INTERVIEW QUESTIONS:
             "result.html",
             result=cleaned_result,
             score=score,
-            category=grade,
-            ats_status=ats_status,
-            grade=grade
+            grade=grade,
+            ats_status=ats_status
         )
 
     return render_template("index.html")
@@ -216,12 +255,12 @@ def history():
 
             try:
 
-                score = int(row[1])
+                current_score = int(row[1])
 
-                scores.append(score)
+                scores.append(current_score)
 
-                if score > highest_score:
-                    highest_score = score
+                if current_score > highest_score:
+                    highest_score = current_score
 
             except:
                 pass
@@ -249,16 +288,17 @@ def download_report():
 
     global latest_report_path
 
-    if latest_report_path and os.path.exists(
-        latest_report_path
+    if (
+        latest_report_path and
+        os.path.exists(latest_report_path)
     ):
-
         return send_file(
             latest_report_path,
             as_attachment=True
         )
 
     return "No report available."
+
 
 @app.route("/download-history")
 def download_history():
@@ -267,6 +307,8 @@ def download_history():
         "history.csv",
         as_attachment=True
     )
+
+
 if __name__ == "__main__":
 
     port = int(
