@@ -178,6 +178,7 @@ INTERVIEW QUESTIONS:
             "result.html",
             result=cleaned_result,
             score=score,
+            category=grade,
             ats_status=ats_status,
             grade=grade
         )
