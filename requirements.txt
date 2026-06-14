@@ -1,5 +1,6 @@
 Flask
+PyPDF2
 groq
 python-dotenv
-PyPDF2
 reportlab
+gunicorn
