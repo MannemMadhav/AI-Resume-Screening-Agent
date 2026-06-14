@@ -21,14 +21,7 @@
         <div class="score-box green">
             Match Score: {{ score }}%
             <br><br>
-            🚀 EXCELLENT MATCH
-        </div>
-
-        <div class="card">
-            <h2>ATS Recommendation</h2>
-            <p class="result-text">
-                Strongly Recommended For Interview
-            </p>
+            EXCELLENT MATCH
         </div>
 
     {% elif score >= 60 %}
@@ -36,14 +29,7 @@
         <div class="score-box yellow">
             Match Score: {{ score }}%
             <br><br>
-            👍 GOOD MATCH
-        </div>
-
-        <div class="card">
-            <h2>ATS Recommendation</h2>
-            <p class="result-text">
-                Recommended With Minor Improvements
-            </p>
+            GOOD MATCH
         </div>
 
     {% elif score >= 40 %}
@@ -51,23 +37,7 @@
         <div class="score-box yellow">
             Match Score: {{ score }}%
             <br><br>
-            ⚠️ AVERAGE MATCH
-        </div>
-        <div class="card">
-
-    <h2>Resume Grade</h2>
-
-    <div class="result-text">
-        {{ grade }}
-    </div>
-
-</div>
-
-        <div class="card">
-            <h2>ATS Recommendation</h2>
-            <p class="result-text">
-                Candidate Needs Skill Improvement
-            </p>
+            AVERAGE MATCH
         </div>
 
     {% else %}
@@ -75,23 +45,24 @@
         <div class="score-box red">
             Match Score: {{ score }}%
             <br><br>
-            ❌ POOR MATCH
-        </div>
-
-        <div class="card">
-            <h2>ATS Recommendation</h2>
-            <p class="result-text">
-                {{ ats_status }}
-            </p>
+            POOR MATCH
         </div>
 
     {% endif %}
 
     <div class="card">
-        <h2>Detected Resume Category</h2>
+        <h2>Resume Grade</h2>
 
         <div class="result-text">
-            {{ category }}
+            {{ grade }}
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>ATS Recommendation</h2>
+
+        <div class="result-text">
+            {{ ats_status }}
         </div>
     </div>
 
@@ -107,34 +78,34 @@
 
         <div class="result-text">
 
-📘 Week 1
+Week 1
 Learn Python Fundamentals
 
-📘 Week 2
+Week 2
 Practice Python Mini Projects
 
-📘 Week 3
+Week 3
 Learn Object Oriented Programming
 
-📘 Week 4
+Week 4
 Learn Flask Framework
 
-📘 Week 5
+Week 5
 Build REST APIs
 
-📘 Week 6
+Week 6
 Learn SQL & Database Design
 
-📘 Week 7
+Week 7
 Learn Git & GitHub
 
-📘 Week 8
+Week 8
 Build Full Stack Projects
 
-📘 Week 9
+Week 9
 Learn Deployment
 
-📘 Week 10
+Week 10
 Prepare For Technical Interviews
 
         </div>
