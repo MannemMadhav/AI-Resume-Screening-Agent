@@ -107,6 +107,24 @@ INTERVIEW QUESTIONS:
         score_match = re.search(r'(\d+)%', ai_result)
 
         score = 0
+        if score >= 90:
+            grade = "A+"
+        elif score >= 80:
+            grade = "A"
+        elif score >= 70:
+            grade = "B+"
+        elif score >= 60:
+            grade = "B"
+        elif score >= 50:
+            grade = "C"
+        else:
+            grade = "Needs Improvement"
+        if score >= 75:
+                ats_status = "Highly Recommended"
+        elif score >= 50:
+            ats_status = "Recommended"
+        else:
+            ats_status = "Not Recommended For Current Role"
 
         if score_match:
             score = int(score_match.group(1))
@@ -159,7 +177,9 @@ INTERVIEW QUESTIONS:
         return render_template(
             "result.html",
             result=cleaned_result,
-            score=score
+            score=score,
+            ats_status=ats_status,
+            grade=grade
         )
 
     return render_template("index.html")
